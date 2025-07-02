@@ -4,7 +4,7 @@ import {
   createContact as createContactService,
   deleteContact as deleteContactService,
   updateContact as updateContactService,
-} from '../services/contacts.js';
+} from '../services/contact.js';
 import createHttpError from 'http-errors';
 
 export const getAllContactsController = async (req, res) => {
