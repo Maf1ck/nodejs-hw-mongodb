@@ -21,6 +21,10 @@ export const setupServer = () => {
     }),
   );
 
+  app.get('/', (req, res) => {
+    res.status(200).json({ message: 'API is running' });
+  });
+
   app.get('/contacts', getAllContactsController);
   app.get('/contacts/:contactId', getContactByIdController);
 
