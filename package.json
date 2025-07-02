@@ -2,6 +2,7 @@
   "name": "02",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/index.js",
@@ -24,6 +25,7 @@
     "http-errors": "^2.0.0",
     "mongodb": "^6.17.0",
     "mongoose": "^8.16.1",
-    "pino-http": "^10.5.0"
+    "pino-http": "^10.5.0",
+    "pino-pretty": "^13.0.0"
   }
 }
