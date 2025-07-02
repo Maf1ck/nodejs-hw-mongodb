@@ -1,7 +1,7 @@
 import {
   getAllContacts as getAllContactsService,
   getContactById as getContactByIdService,
-} from '../services/contacts.js';
+} from '../services/contact.js';
 
 export const getAllContactsController = async (req, res) => {
   try {

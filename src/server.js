@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import {
   getAllContactsController,
   getContactByIdController,
-} from './controllers/contacts.js';
+} from './controllers/contact.js';
 
 dotenv.config();
 
