@@ -20,6 +20,11 @@ export const setupServer = () => {
     }),
   );
   app.use(express.json());
+  
+  app.get("/", (req, res) => {
+    res.json({ message: "API is running 🚀" });
+  });
+  
   app.use('/contacts', contactsRouter);
 
   app.use(notFoundHandler);

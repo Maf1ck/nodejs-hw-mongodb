@@ -8,7 +8,24 @@ import {
 import createHttpError from 'http-errors';
 
 export const getAllContactsController = async (req, res) => {
-  const contacts = await getAllContactsService();
+  const { 
+    page = 1, 
+    perPage = 10, 
+    sortBy = 'name', 
+    sortOrder = 'asc',
+    type,
+    isFavourite 
+  } = req.query;
+  
+  const contacts = await getAllContactsService(
+    parseInt(page), 
+    parseInt(perPage), 
+    sortBy, 
+    sortOrder,
+    type,
+    isFavourite
+  );
+  
   res.json({
     status: 200,
     message: 'Successfully found contacts!',
@@ -31,9 +48,6 @@ export const getContactByIdController = async (req, res) => {
 
 export const createContactController = async (req, res) => {
   const payload = req.body;
-  if (!payload.name || !payload.phoneNumber || !payload.contactType) {
-      throw createHttpError(400, 'Missing required fields: name, phoneNumber, contactType');
-  }
   const contact = await createContactService(payload);
   res.status(201).json({
     status: 201,
@@ -54,16 +68,13 @@ export const deleteContactController = async (req, res) => {
 export const updateContactController = async (req, res) => {
   const { contactId } = req.params;
   const payload = req.body;
-  if (Object.keys(payload).length === 0) {
-    throw createHttpError(400, 'Missing fields to update');
-  }
   const contact = await updateContactService(contactId, payload);
   if (!contact) {
     throw createHttpError(404, 'Contact not found');
   }
   res.status(200).json({
     status: 200,
-    message: 'Successfully updated contact!',
+    message: 'Successfully patched a contact!',
     data: contact,
   });
 };
