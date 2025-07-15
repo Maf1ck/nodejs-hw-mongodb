@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import ctrlWrapper from '../utils/ctrlWrapper.js';
+import { authenticate } from '../middlewares/authenticate.js';
 import {
   getAllContactsController,
   getContactByIdController,
@@ -9,6 +10,8 @@ import {
 } from '../controllers/contact.js';
 
 const router = Router();
+
+router.use(authenticate);
 
 router.get('/', ctrlWrapper(getAllContactsController));
 router.get('/:contactId', ctrlWrapper(getContactByIdController));
