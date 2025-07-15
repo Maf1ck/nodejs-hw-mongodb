@@ -23,6 +23,10 @@ export const setupServer = () => {
   );
   app.use(express.json());
   app.use(cookieParser());
+
+  app.get('/', (req, res) => {
+    res.json({ message: 'API is running' });
+  });
   app.use('/contacts', contactsRouter);
   app.use('/auth', authRouter);
 
