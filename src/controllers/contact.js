@@ -8,7 +8,21 @@ import {
 import createHttpError from 'http-errors';
 
 export const getAllContactsController = async (req, res) => {
-  const contacts = await getAllContactsService(req.user._id);
+  const { page = 1, limit = 10, sortBy, sortByDesc, filter } = req.query;
+  const skip = (page - 1) * limit;
+  const sort = {};
+  if (sortBy) sort[sortBy] = 1;
+  if (sortByDesc) sort[sortByDesc] = -1;
+  let filterQuery = { userId: req.user._id };
+  if (filter) {
+    // filter=field1|field2
+    const fields = filter.split('|');
+    filterQuery = {
+      ...filterQuery,
+      $or: fields.map((field) => ({ [field]: { $exists: true } })),
+    };
+  }
+  const contacts = await getAllContactsService(filterQuery, { skip: Number(skip), limit: Number(limit), sort });
   res.json({
     status: 200,
     message: 'Successfully found contacts!',
