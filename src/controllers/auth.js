@@ -1,4 +1,4 @@
-import { registerService, loginService, refreshService, logoutService } from '../services/auth.js';
+import { registerService, loginService, refreshService, logoutService, sendResetEmailService, resetPasswordService } from '../services/auth.js';
 
 export const registerController = async (req, res, next) => {
   try {
@@ -27,6 +27,22 @@ export const refreshController = async (req, res, next) => {
 export const logoutController = async (req, res, next) => {
   try {
     await logoutService(req, res);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const sendResetEmailController = async (req, res, next) => {
+  try {
+    await sendResetEmailService(req, res);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const resetPasswordController = async (req, res, next) => {
+  try {
+    await resetPasswordService(req, res);
   } catch (err) {
     next(err);
   }
