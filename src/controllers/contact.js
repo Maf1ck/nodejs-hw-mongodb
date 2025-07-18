@@ -7,33 +7,54 @@ import {
 } from '../services/contact.js';
 import createHttpError from 'http-errors';
 import cloudinary from '../utils/cloudinary.js';
+import mongoose from 'mongoose';
 
 export const getAllContactsController = async (req, res) => {
-  const { page = 1, limit = 10, sortBy, sortByDesc, filter } = req.query;
-  const skip = (page - 1) * limit;
-  const sort = {};
-  if (sortBy) sort[sortBy] = 1;
-  if (sortByDesc) sort[sortByDesc] = -1;
-  let filterQuery = { userId: req.user._id };
-  if (filter) {
-    // filter=field1|field2
-    const fields = filter.split('|');
-    filterQuery = {
-      ...filterQuery,
-      $or: fields.map((field) => ({ [field]: { $exists: true } })),
-    };
+  const {
+    page = 1,
+    perPage = 10,
+    sortBy = 'name',
+    sortOrder = 'asc',
+    type,
+    isFavourite,
+  } = req.query;
+  const pageNum = Number(page);
+  const perPageNum = Number(perPage);
+  const skip = (pageNum - 1) * perPageNum;
+
+  let filterQuery = { userId: new mongoose.Types.ObjectId(req.user._id) };
+  if (type) {
+    filterQuery.contactType = type;
   }
+  if (typeof isFavourite !== 'undefined') {
+    filterQuery.isFavourite = isFavourite === 'true';
+  }
+
+  const sort = {};
+  if (sortBy) {
+    sort[sortBy] = sortOrder === 'desc' ? -1 : 1;
+  }
+
   const { Contact } = await import('../models/contact.js');
-  const contacts = await getAllContactsService(filterQuery, { skip: Number(skip), limit: Number(limit), sort });
-  const total = await Contact.countDocuments(filterQuery);
+  const totalItems = await Contact.countDocuments(filterQuery);
+  const totalPages = Math.ceil(totalItems / perPageNum);
+  const contacts = await Contact.find(filterQuery, null, {
+    skip,
+    limit: perPageNum,
+    sort,
+  });
+
   res.json({
     status: 200,
     message: 'Successfully found contacts!',
     data: {
-      total,
-      page: Number(page),
-      limit: Number(limit),
-      contacts,
+      data: contacts,
+      page: pageNum,
+      perPage: perPageNum,
+      totalItems,
+      totalPages,
+      hasPreviousPage: pageNum > 1,
+      hasNextPage: pageNum < totalPages,
     },
   });
 };

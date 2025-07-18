@@ -9,15 +9,21 @@ import {
   deleteContactController,
   updateContactController,
 } from '../controllers/contact.js';
+import Joi from 'joi';
+import validateBody from '../middlewares/validateBody.js';
+import { contactUpdateSchema } from '../schemas/contact.js';
 
 const router = Router();
 
 router.use(authenticate);
 
 router.get('/', ctrlWrapper(getAllContactsController));
-router.get('/:contactId', ctrlWrapper(getContactByIdController));
 router.post('/', upload.single('photo'), ctrlWrapper(createContactController));
-router.delete('/:contactId', ctrlWrapper(deleteContactController));
-router.patch('/:contactId', upload.single('photo'), ctrlWrapper(updateContactController));
+
+router
+  .route('/:contactId')
+  .get(ctrlWrapper(getContactByIdController))
+  .patch(validateBody(contactUpdateSchema), ctrlWrapper(updateContactController))
+  .delete(ctrlWrapper(deleteContactController));
 
 export default router;
