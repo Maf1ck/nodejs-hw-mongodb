@@ -1,0 +1,75 @@
+tags:
+  - Auth
+summary: Логін користувача
+operationId: loginUser
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          email:
+            type: string
+            example: ivan@example.com
+          password:
+            type: string
+            example: mySecret123
+      examples:
+        valid:
+          summary: Валідний запит
+          value:
+            email: ivan@example.com
+            password: mySecret123
+responses:
+  '200':
+    description: Успішний вхід
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully logged in an user!
+            data:
+              type: object
+              properties:
+                accessToken:
+                  type: string
+                  example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        examples:
+          success:
+            summary: Успішний логін
+            value:
+              status: 200
+              message: Successfully logged in an user!
+              data:
+                accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  '400':
+    description: Некоректні дані
+    content:
+      application/json:
+        schema:
+          $ref: '../../components/error.yaml'
+        examples:
+          badRequest:
+            summary: Некоректний запит
+            value:
+              status: 400
+              message: "Missing required fields: email, password"
+  '401':
+    description: Невірний email або пароль
+    content:
+      application/json:
+        schema:
+          $ref: '../../components/error.yaml'
+        examples:
+          unauthorized:
+            summary: Невірний email або пароль
+            value:
+              status: 401
+              message: "Invalid email or password" 

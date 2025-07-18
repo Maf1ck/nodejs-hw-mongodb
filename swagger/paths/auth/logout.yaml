@@ -1,0 +1,23 @@
+tags:
+  - Auth
+summary: Логаут користувача
+operationId: logoutUser
+security:
+  - bearerAuth: []
+description: |
+  Завершує сесію користувача, видаляє refreshToken та accessToken. Потрібна авторизація через Bearer токен.
+responses:
+  '204':
+    description: Користувача розлогінено (No Content)
+  '401':
+    description: Неавторизовано або токен невалідний
+    content:
+      application/json:
+        schema:
+          $ref: '../../components/error.yaml'
+        examples:
+          unauthorized:
+            summary: Неавторизований запит
+            value:
+              status: 401
+              message: "No refresh token provided" 

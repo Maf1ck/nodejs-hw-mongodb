@@ -1,11 +1,11 @@
 tags:
   - Contacts
-summary: Отримати всі контакти з пагінацією
+summary: Отримати всі контакти користувача з пагінацією
 operationId: getAllContacts
 security:
   - bearerAuth: []
 description: |
-  Повертає список контактів користувача з підтримкою пагінації, фільтрації та сортування.
+  Повертає список контактів, що належать авторизованому користувачу. Підтримує пагінацію, фільтрацію та сортування.
 parameters:
   - name: page
     in: query
@@ -44,9 +44,42 @@ responses:
       application/json:
         schema:
           $ref: '../../../components/contactsPaginated.yaml'
+        examples:
+          success:
+            summary: Приклад успішної відповіді
+            value:
+              status: 200
+              message: Successfully found contacts!
+              data:
+                total: 2
+                page: 1
+                limit: 10
+                contacts:
+                  - _id: "60f7c0b8e1d2c70015e4d123"
+                    name: "Ivan Petrenko"
+                    phoneNumber: "+380501234567"
+                    contactType: "friend"
+                    photo: "https://example.com/photo1.jpg"
+                    userId: "60f7c0b8e1d2c70015e4d001"
+                    createdAt: "2023-10-01T12:00:00.000Z"
+                    updatedAt: "2023-10-01T12:00:00.000Z"
+                  - _id: "60f7c0b8e1d2c70015e4d124"
+                    name: "Olena Shevchenko"
+                    phoneNumber: "+380671234567"
+                    contactType: "work"
+                    photo: "https://example.com/photo2.jpg"
+                    userId: "60f7c0b8e1d2c70015e4d001"
+                    createdAt: "2023-10-02T12:00:00.000Z"
+                    updatedAt: "2023-10-02T12:00:00.000Z"
   '401':
     description: Неавторизовано
     content:
       application/json:
         schema:
-          $ref: '../../../components/error.yaml' 
+          $ref: '../../../components/error.yaml'
+        examples:
+          unauthorized:
+            summary: Неавторизований запит
+            value:
+              status: 401
+              message: "No access token provided" 

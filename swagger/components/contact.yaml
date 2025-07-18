@@ -2,25 +2,30 @@ type: object
 properties:
   _id:
     type: string
-    description: Унікальний ідентифікатор контакту
+    description: Унікальний ідентифікатор контакту (MongoDB ObjectId)
   name:
     type: string
+    description: Ім'я контакту
   phoneNumber:
     type: string
+    description: Номер телефону контакту
   contactType:
     type: string
+    description: Тип контакту (наприклад, друг, робота, сім'я)
   photo:
     type: string
-    description: URL фото
+    description: URL фото контакту
   userId:
     type: string
-    description: ID користувача
+    description: ID користувача, якому належить контакт
   createdAt:
     type: string
     format: date-time
+    description: Дата створення контакту
   updatedAt:
     type: string
     format: date-time
+    description: Дата останнього оновлення контакту
 required:
   - _id
   - name

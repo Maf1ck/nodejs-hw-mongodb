@@ -16,6 +16,15 @@ servers:
   - url: http://localhost:3000
   - url: #посилання на задеплоєний сайт
 paths:
+  /auth/register:
+    post:
+      $ref: '../swagger/paths/auth/register.yaml'
+  /auth/login:
+    post:
+      $ref: '../swagger/paths/auth/login.yaml'
+  /auth/logout:
+    post:
+      $ref: '../swagger/paths/auth/logout.yaml'
   /contacts:
     get:
       $ref: '../swagger/paths/contacts/get.yaml'
