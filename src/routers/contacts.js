@@ -12,6 +12,7 @@ import {
   deleteContactController,
   updateContactController,
 } from '../controllers/contact.js';
+import { contactCreateSchema, contactUpdateSchema } from '../schemas/contact.js';
 
 const router = Router();
 
