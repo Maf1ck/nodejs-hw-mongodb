@@ -7,6 +7,9 @@ import contactsRouter from './routers/contacts.js';
 import authRouter from './routers/auth.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
+import swaggerUi from 'swagger-ui-express';
+import YAML from 'yamljs';
+import path from 'path';
 
 dotenv.config();
 
@@ -23,6 +26,10 @@ export const setupServer = () => {
   );
   app.use(express.json());
   app.use(cookieParser());
+
+  // Swagger UI
+  const swaggerDocument = YAML.load(path.resolve('docs/openapi.yaml'));
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
   app.get('/', (req, res) => {
     res.json({ message: 'API is running' });

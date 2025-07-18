@@ -58,10 +58,6 @@ export const createContactController = async (req, res) => {
   }
   let photoUrl = '';
   if (req.file) {
-    const uploadResult = await cloudinary.uploader.upload_stream({ resource_type: 'image' }, (error, result) => {
-      if (error) throw createHttpError(500, 'Failed to upload photo');
-      photoUrl = result.secure_url;
-    });
     await new Promise((resolve, reject) => {
       const stream = cloudinary.uploader.upload_stream((error, result) => {
         if (error) return reject(createHttpError(500, 'Failed to upload photo'));
