@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { registerController, loginController, refreshController, logoutController, sendResetEmailController, resetPasswordController } from '../controllers/auth.js';
 import validateBody from '../middlewares/validateBody.js';
 import { sendResetEmailSchema, resetPasswordSchema } from '../validation/authValidation.js';
+import { contactCreateSchema, contactUpdateSchema } from '../schemas/contact.js';
 
 const router = Router();
 
