@@ -23,10 +23,19 @@ export const getAllContactsController = async (req, res) => {
     };
   }
   const contacts = await getAllContactsService(filterQuery, { skip: Number(skip), limit: Number(limit), sort });
+  // Додаю підрахунок total
+  const { countDocuments } = await import('mongoose');
+  const { Contact } = await import('../models/contact.js');
+  const total = await Contact.countDocuments(filterQuery);
   res.json({
     status: 200,
     message: 'Successfully found contacts!',
-    data: contacts,
+    data: {
+      total,
+      page: Number(page),
+      limit: Number(limit),
+      contacts,
+    },
   });
 };
 
