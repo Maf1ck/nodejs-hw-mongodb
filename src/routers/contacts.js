@@ -2,6 +2,9 @@ import { Router } from 'express';
 import ctrlWrapper from '../utils/ctrlWrapper.js';
 import { authenticate } from '../middlewares/authenticate.js';
 import { upload } from '../middlewares/upload.js';
+import Joi from 'joi';
+import validateBody from '../middlewares/validateBody.js';
+import isValidId from '../middlewares/isValidId.js';
 import {
   getAllContactsController,
   getContactByIdController,
@@ -15,9 +18,13 @@ const router = Router();
 router.use(authenticate);
 
 router.get('/', ctrlWrapper(getAllContactsController));
-router.get('/:contactId', ctrlWrapper(getContactByIdController));
-router.post('/', upload.single('photo'), ctrlWrapper(createContactController));
-router.delete('/:contactId', ctrlWrapper(deleteContactController));
-router.patch('/:contactId', upload.single('photo'), ctrlWrapper(updateContactController));
+router.post('/', upload.single('photo'), validateBody(contactCreateSchema), ctrlWrapper(createContactController));
+
+router
+  .route('/:contactId')
+  .all(isValidId)
+  .get(ctrlWrapper(getContactByIdController))
+  .patch(validateBody(contactUpdateSchema), ctrlWrapper(updateContactController))
+  .delete(ctrlWrapper(deleteContactController));
 
 export default router;
