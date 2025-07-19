@@ -111,7 +111,7 @@ export const deleteContactController = async (req, res) => {
 
 export const updateContactController = async (req, res) => {
   const { contactId } = req.params;
-  const payload = req.body;
+  const payload = req.body || {};
   if (Object.keys(payload).length === 0 && !req.file) {
     throw createHttpError(400, 'Missing fields to update');
   }
@@ -126,7 +126,9 @@ export const updateContactController = async (req, res) => {
       stream.end(req.file.buffer);
     });
   }
-  const contact = await updateContactService(contactId, req.user._id, { ...payload, ...(photoUrl && { photo: photoUrl }) });
+  const updateData = typeof payload === 'object' && payload !== null ? { ...payload } : {};
+  if (photoUrl) updateData.photo = photoUrl;
+  const contact = await updateContactService(contactId, req.user._id, updateData);
   if (!contact) {
     throw createHttpError(404, 'Contact not found');
   }

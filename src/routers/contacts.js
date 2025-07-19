@@ -23,7 +23,7 @@ router.post('/', upload.single('photo'), ctrlWrapper(createContactController));
 router
   .route('/:contactId')
   .get(ctrlWrapper(getContactByIdController))
-  .patch(validateBody(contactUpdateSchema), ctrlWrapper(updateContactController))
+  .patch(upload.single('photo'), validateBody(contactUpdateSchema), ctrlWrapper(updateContactController))
   .delete(ctrlWrapper(deleteContactController));
 
 export default router;
