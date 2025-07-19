@@ -12,13 +12,11 @@ parameters:
     required: false
     schema:
       type: integer
-    description: Номер сторінки (default: 1)
   - name: limit
     in: query
     required: false
     schema:
       type: integer
-    description: Кількість елементів на сторінці (default: 10)
   - name: sortBy
     in: query
     required: false
