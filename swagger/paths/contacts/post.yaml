@@ -28,16 +28,16 @@ responses:
     content:
       application/json:
         schema:
-          $ref: '../../../components/contact.yaml'
+          $ref: '../../components/contact.yaml'
   '400':
     description: Некоректні дані
     content:
       application/json:
         schema:
-          $ref: '../../../components/error.yaml'
+          $ref: '../../components/error.yaml'
   '401':
     description: Неавторизовано
     content:
       application/json:
         schema:
-          $ref: '../../../components/error.yaml' 
+          $ref: '../../components/error.yaml' 
