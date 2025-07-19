@@ -1,45 +1,183 @@
 openapi: 3.1.0
 info:
   version: 1.0.0
-  title: nodejs-hw-mongodb
+  title: My Contacts API
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   description: |
-    REST API для керування контактами з підтримкою авторизації, пагінації, завантаження фото та документації OpenAPI.
+    API для керування контактами користувача. Дозволяє створювати, переглядати, оновлювати та видаляти контакти. Підтримує авторизацію через Bearer токен.
+servers:
+  - url: http://localhost:3000
+  - url: https://your-deployed-site.com #посилання на задеплоєний сайт
 tags:
   - name: Contacts
     description: Операції з контактами
-  - name: Auth
-    description: Операції авторизації
-servers:
-  - url: http://localhost:3000
-  - url: https://nodejs-hw-mongodb-5-saax.onrender.com
 paths:
-  /auth/register:
-    post:
-      $ref: '../swagger/paths/auth/register.yaml'
-  /auth/login:
-    post:
-      $ref: '../swagger/paths/auth/login.yaml'
-  /auth/logout:
-    post:
-      $ref: '../swagger/paths/auth/logout.yaml'
-  /contacts:
-    get:
-      $ref: '../swagger/paths/contacts/get.yaml'
-    post:
-      $ref: '../swagger/paths/contacts/post.yaml'
   /contacts/{contactId}:
     get:
-      $ref: '../swagger/paths/contacts/{contactId}/get.yaml'
+      tags:
+        - Contacts
+      summary: Отримати контакт за ідентифікатором
+      operationId: getContactById
+      description: Повертає контакт за його унікальним ідентифікатором. Потрібна авторизація через Bearer токен.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: contactId
+          in: path
+          required: true
+          description: Унікальний ідентифікатор контакту
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Успішна відповідь. Контакт знайдено.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+        '404':
+          description: Контакт не знайдено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
     patch:
-      $ref: '../swagger/paths/contacts/{contactId}/patch.yaml'
-    delete:
-      $ref: '../swagger/paths/contacts/{contactId}/delete.yaml'
-  # тут будуть посилання на ендпоінти
+      tags:
+        - Contacts
+      summary: Оновити контакт за ідентифікатором
+      operationId: updateContactById
+      description: Оновлює дані контакту за його унікальним ідентифікатором. Потрібна авторизація через Bearer токен.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: contactId
+          in: path
+          required: true
+          description: Унікальний ідентифікатор контакту
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactUpdate'
+      responses:
+        '200':
+          description: Контакт успішно оновлено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contact'
+        '400':
+          description: Некоректні дані
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Контакт не знайдено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /contacts:
+    get:
+      tags:
+        - Contacts
+      summary: Отримати список контактів
+      operationId: getContacts
+      description: Повертає список контактів користувача з підтримкою пагінації та фільтрації за улюбленими. Потрібна авторизація через Bearer токен.
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          required: false
+          description: Номер сторінки (за замовчуванням 1)
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          required: false
+          description: Кількість контактів на сторінці (за замовчуванням 20)
+          schema:
+            type: integer
+        - name: favorite
+          in: query
+          required: false
+          description: Фільтр за улюбленими контактами. Можливі значення: 'true' або 'false'.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Успішна відповідь. Список контактів.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  contacts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Contact'
+        '401':
+          description: Неавторизовано
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 components:
   securitySchemes:
     bearerAuth:
       type: http
-      scheme: bearer 
+      scheme: bearer
+  schemas:
+    Contact:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 60d21b4667d0d8992e610c85
+        name:
+          type: string
+          example: Ivan Petrenko
+        email:
+          type: string
+          example: ivan@example.com
+        phone:
+          type: string
+          example: '+380501234567'
+        favorite:
+          type: boolean
+          example: false
+      required:
+        - _id
+        - name
+        - email
+        - phone
+    ContactUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Ivan Petrenko
+        email:
+          type: string
+          example: ivan@example.com
+        phone:
+          type: string
+          example: '+380501234567'
+        favorite:
+          type: boolean
+          example: true
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Not found
+      required:
+        - message

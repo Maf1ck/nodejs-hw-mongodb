@@ -1,11 +1,7 @@
 type: object
 properties:
-  status:
-    type: integer
-    description: Код статусу
   message:
     type: string
-    description: Опис помилки
+    example: Not found
 required:
-  - status
   - message 
