@@ -9,7 +9,7 @@ info:
     API для керування контактами користувача. Дозволяє створювати, переглядати, оновлювати та видаляти контакти. Підтримує авторизацію через Bearer токен.
 servers:
   - url: http://localhost:3000
-  - url: https://your-deployed-site.com #посилання на задеплоєний сайт
+  - url: https://nodejs-hw-mongodb-5-saax.onrender.com  
 tags:
   - name: Contacts
     description: Операції з контактами
