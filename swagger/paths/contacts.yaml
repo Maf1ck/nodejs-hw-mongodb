@@ -1,0 +1,143 @@
+get:
+  tags:
+    - Contacts
+  summary: Отримати список контактів
+  operationId: getContacts
+  description: Повертає список контактів користувача з підтримкою пагінації та фільтрації за улюбленими. Потрібна авторизація через Bearer токен.
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: page
+      in: query
+      required: false
+      description: Номер сторінки (за замовчуванням 1)
+      schema:
+        type: integer
+        default: 1
+    - name: limit
+      in: query
+      required: false
+      description: Кількість контактів на сторінці (за замовчуванням 20)
+      schema:
+        type: integer
+        default: 20
+    - name: favorite
+      in: query
+      required: false
+      description: Фільтр за улюбленими контактами
+      schema:
+        type: boolean
+  responses:
+    '200':
+      description: Успішна відповідь. Список контактів.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: Successfully found contacts!
+              data:
+                type: object
+                properties:
+                  contacts:
+                    type: array
+                    items:
+                      $ref: '../../components/contact.yaml'
+                  total:
+                    type: integer
+                    example: 100
+                  page:
+                    type: integer
+                    example: 1
+                  limit:
+                    type: integer
+                    example: 10
+          examples:
+            success:
+              value:
+                status: 200
+                message: Successfully found contacts!
+                data:
+                  contacts:
+                    - _id: "60d21b4667d0d8992e610c85"
+                      name: "Ivan Petrenko"
+                      email: "ivan@example.com"
+                      phone: "+380501234567"
+                      favorite: false
+                  total: 100
+                  page: 1
+                  limit: 10
+    '401':
+      description: Неавторизовано
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/error.yaml'
+post:
+  tags:
+    - Contacts
+  summary: Створити новий контакт
+  operationId: createContact
+  description: Створює новий контакт. Потрібна авторизація через Bearer токен.
+  security:
+    - bearerAuth: []
+  requestBody:
+    required: true
+    content:
+      multipart/form-data:
+        schema:
+          type: object
+          required:
+            - name
+            - phoneNumber
+            - contactType
+          properties:
+            name:
+              type: string
+            phoneNumber:
+              type: string
+            contactType:
+              type: string
+            email:
+              type: string
+            photo:
+              type: string
+              format: binary
+  responses:
+    '201':
+      description: Контакт успішно створено
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 201
+              message:
+                type: string
+                example: Successfully created a contact!
+              data:
+                $ref: '../../components/contact.yaml'
+          examples:
+            success:
+              value:
+                status: 201
+                message: Successfully created a contact!
+                data:
+                  _id: "60d21b4667d0d8992e610c85"
+                  name: "Ivan Petrenko"
+                  email: "ivan@example.com"
+                  phone: "+380501234567"
+                  favorite: false
+    '400':
+      description: Некоректні дані
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/error.yaml' 
