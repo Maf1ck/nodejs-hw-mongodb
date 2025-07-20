@@ -33,12 +33,48 @@ get:
       content:
         application/json:
           schema:
-            type: array
-            items:
-              $ref: '../../components/contact.yaml'
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: Successfully found contacts!
+              data:
+                type: object
+                properties:
+                  contacts:
+                    type: array
+                    items:
+                      $ref: '../../components/contact.yaml'
+                  total:
+                    type: integer
+                    example: 100
+                  page:
+                    type: integer
+                    example: 1
+                  limit:
+                    type: integer
+                    example: 10
+          examples:
+            success:
+              value:
+                status: 200
+                message: Successfully found contacts!
+                data:
+                  contacts:
+                    - _id: '60d21b4667d0d8992e610c85'
+                      name: 'Ivan Petrenko'
+                      email: 'ivan@example.com'
+                      phone: '+380501234567'
+                      favorite: false
+                  total: 100
+                  page: 1
+                  limit: 10
     '401':
       description: Неавторизовано
       content:
         application/json:
           schema:
-            $ref: '../../components/error.yaml' 
+            $ref: '../../components/error.yaml'

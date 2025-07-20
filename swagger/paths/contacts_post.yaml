@@ -1,39 +1,36 @@
-patch:
+post:
   tags:
     - Contacts
-  summary: Оновити контакт за ідентифікатором
-  operationId: updateContactById
-  description: Оновлює дані контакту за його унікальним ідентифікатором. Потрібна авторизація через Bearer токен.
+  summary: Створити новий контакт
+  operationId: createContact
+  description: Створює новий контакт. Потрібна авторизація через Bearer токен.
   security:
     - bearerAuth: []
-  parameters:
-    - name: contactId
-      in: path
-      required: true
-      description: Унікальний ідентифікатор контакту
-      schema:
-        type: string
   requestBody:
     required: true
     content:
       multipart/form-data:
         schema:
           type: object
+          required:
+            - name
+            - phoneNumber
+            - contactType
           properties:
             name:
               type: string
+            phoneNumber:
+              type: string
+            contactType:
+              type: string
             email:
               type: string
-            phone:
-              type: string
-            favorite:
-              type: boolean
             photo:
               type: string
               format: binary
   responses:
-    '200':
-      description: Контакт успішно оновлено
+    '201':
+      description: Контакт успішно створено
       content:
         application/json:
           schema:
@@ -41,31 +38,25 @@ patch:
             properties:
               status:
                 type: integer
-                example: 200
+                example: 201
               message:
                 type: string
-                example: Successfully updated contact!
+                example: Successfully created a contact!
               data:
                 $ref: '../../components/contact.yaml'
           examples:
             success:
               value:
-                status: 200
-                message: Successfully updated contact!
+                status: 201
+                message: Successfully created a contact!
                 data:
                   _id: '60d21b4667d0d8992e610c85'
                   name: 'Ivan Petrenko'
                   email: 'ivan@example.com'
                   phone: '+380501234567'
-                  favorite: true
+                  favorite: false
     '400':
       description: Некоректні дані
-      content:
-        application/json:
-          schema:
-            $ref: '../../components/error.yaml'
-    '404':
-      description: Контакт не знайдено
       content:
         application/json:
           schema:
