@@ -27,6 +27,9 @@ export const setupServer = () => {
   app.use(express.json());
   app.use(cookieParser());
 
+  // Додаємо віддачу swagger-файлів
+  app.use('/swagger', express.static(path.resolve('swagger')));
+
   // Swagger UI
   const swaggerDocument = YAML.load(path.resolve('docs/openapi.yaml'));
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
