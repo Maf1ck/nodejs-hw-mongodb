@@ -47,7 +47,7 @@ get:
                   contacts:
                     type: array
                     items:
-                      $ref: '../../components/contact.yaml'
+                      $ref: '/swagger/components/contact.yaml'
                   total:
                     type: integer
                     example: 100
@@ -77,7 +77,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../components/error.yaml'
+            $ref: '/swagger/components/error.yaml'
 post:
   tags:
     - Contacts
@@ -123,7 +123,7 @@ post:
                 type: string
                 example: Successfully created a contact!
               data:
-                $ref: '../../components/contact.yaml'
+                $ref: '/swagger/components/contact.yaml'
           examples:
             success:
               value:
@@ -140,4 +140,4 @@ post:
       content:
         application/json:
           schema:
-            $ref: '../../components/error.yaml' 
+            $ref: '/swagger/components/error.yaml' 

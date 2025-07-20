@@ -28,7 +28,7 @@ get:
                 type: string
                 example: Successfully found contact with id 60d21b4667d0d8992e610c85!
               data:
-                $ref: '../../components/contact.yaml'
+                $ref: '/swagger/components/contact.yaml'
           examples:
             success:
               value:
@@ -45,7 +45,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../components/error.yaml'
+            $ref: '/swagger/components/error.yaml'
 patch:
   tags:
     - Contacts
@@ -94,7 +94,7 @@ patch:
                 type: string
                 example: Successfully updated contact!
               data:
-                $ref: '../../components/contact.yaml'
+                $ref: '/swagger/components/contact.yaml'
           examples:
             success:
               value:
@@ -111,13 +111,13 @@ patch:
       content:
         application/json:
           schema:
-            $ref: '../../components/error.yaml'
+            $ref: '/swagger/components/error.yaml'
     '404':
       description: Контакт не знайдено
       content:
         application/json:
           schema:
-            $ref: '../../components/error.yaml'
+            $ref: '/swagger/components/error.yaml'
 delete:
   tags:
     - Contacts
@@ -160,4 +160,4 @@ delete:
       content:
         application/json:
           schema:
-            $ref: '../../components/error.yaml' 
+            $ref: '/swagger/components/error.yaml' 
