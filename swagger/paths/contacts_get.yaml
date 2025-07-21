@@ -86,6 +86,8 @@ get:
                   total: 100
                   page: 1
                   limit: 10
+                  hasPreviousPage: false
+                  hasNextPage: true
     '401':
       description: Неавторизовано
       content:
