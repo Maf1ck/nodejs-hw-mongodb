@@ -17,16 +17,28 @@ get:
     - name: limit
       in: query
       required: false
-      description: Кількість контактів на сторінці (за замовчуванням 20)
+      description: Кількість контактів на сторінці (за замовчуванням 10)
       schema:
         type: integer
-        default: 20
-    - name: favorite
+        default: 10
+    - name: sortBy
       in: query
       required: false
-      description: Фільтр за улюбленими контактами
+      description: Сортувати за полем (наприклад, name)
       schema:
-        type: boolean
+        type: string
+    - name: sortByDesc
+      in: query
+      required: false
+      description: Сортувати за спаданням по полю (наприклад, name)
+      schema:
+        type: string
+    - name: filter
+      in: query
+      required: false
+      description: Фільтрація по полях (наприклад, name|email)
+      schema:
+        type: string
   responses:
     '200':
       description: Успішна відповідь. Список контактів.
@@ -67,8 +79,10 @@ get:
                     - _id: '60d21b4667d0d8992e610c85'
                       name: 'Ivan Petrenko'
                       email: 'ivan@example.com'
-                      phone: '+380501234567'
-                      favorite: false
+                      phoneNumber: '+380501234567'
+                      isFavourite: false
+                      contactType: 'work'
+                      photo: 'https://example.com/photo.jpg'
                   total: 100
                   page: 1
                   limit: 10

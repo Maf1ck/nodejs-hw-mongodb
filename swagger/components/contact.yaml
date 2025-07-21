@@ -9,14 +9,25 @@ properties:
   email:
     type: string
     example: ivan@example.com
-  phone:
+  phoneNumber:
     type: string
     example: '+380501234567'
-  favorite:
+  isFavourite:
     type: boolean
     example: false
+  contactType:
+    type: string
+    example: work
+  photo:
+    type: string
+    example: 'https://example.com/photo.jpg'
+  userId:
+    type: string
+    example: 60d21b4667d0d8992e610c99
 required:
   - _id
   - name
-  - email
-  - phone 
+  - phoneNumber
+  - contactType
+  - isFavourite
+  - userId 
