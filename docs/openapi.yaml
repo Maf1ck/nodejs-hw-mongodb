@@ -16,16 +16,16 @@ tags:
 paths:
   /contacts:
     get:
-      $ref: '../swagger/paths/contacts/get.yaml'
+      $ref: ../swagger/paths/contacts/get.yaml
     post:
-      $ref: '../swagger/paths/contacts/post.yaml'
+      $ref: ../swagger/paths/contacts/post.yaml
   /contacts/{contactId}:
     get:
-      $ref: '../swagger/paths/contacts/{contactId}/get.yaml'
-    patch:
-      $ref: '../swagger/paths/contacts/{contactId}/patch.yaml'
+      $ref: ../swagger/paths/contacts/{contactId}/get.yaml
     delete:
-      $ref: '../swagger/paths/contacts/{contactId}/delete.yaml'
+      $ref: ../swagger/paths/contacts/{contactId}/delete.yaml
+    patch:
+      $ref: ../swagger/paths/contacts/{contactId}/patch.yaml
 components:
   securitySchemes:
     bearerAuth:
