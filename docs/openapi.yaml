@@ -1,18 +1,17 @@
 openapi: 3.1.0
 info:
   version: 1.0.0
-  title: My Contacts API
+  title: Contacts App
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  description: |
-    API для керування контактами користувача. Дозволяє створювати, переглядати, оновлювати та видаляти контакти. Підтримує авторизацію через Bearer токен.
-servers:
-  - url: http://localhost:3000
-  - url: https://nodejs-hw-mongodb-5-saax.onrender.com
+  description: This is a documentation of contacts app
 tags:
   - name: Contacts
-    description: Операції з контактами
+    description: Contacts operations
+servers:
+  - url: http://localhost:3000
+  - url: https://nodejs-hw-mongodb-k74s.onrender.com
 paths:
   /contacts:
     get:
@@ -31,3 +30,11 @@ components:
     bearerAuth:
       type: http
       scheme: bearer
+    cookieAuthUserId:
+      type: apiKey
+      in: cookie
+      name: sessionId
+    cookieAuthRefreshToken:
+      type: apiKey
+      in: cookie
+      name: refreshToken
