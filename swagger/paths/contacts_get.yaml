@@ -75,7 +75,7 @@ get:
                 status: 200
                 message: Successfully found contacts!
                 data:
-                  contacts:
+                  data:
                     - _id: '60d21b4667d0d8992e610c85'
                       name: 'Ivan Petrenko'
                       email: 'ivan@example.com'
