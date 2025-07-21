@@ -31,7 +31,7 @@ export const setupServer = () => {
   app.use('/swagger', express.static(path.resolve('swagger')));
 
   // Swagger UI
-  const swaggerDocument = YAML.load(path.resolve('docs/openapi.yaml'));
+  const swaggerDocument = YAML.load(path.resolve('docs/openapi.full.yaml'));
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
   app.get('/', (req, res) => {
