@@ -6,9 +6,15 @@ properties:
   email:
     type: string
     example: ivan@example.com
-  phone:
+  phoneNumber:
     type: string
     example: '+380501234567'
-  favorite:
+  isFavourite:
     type: boolean
-    example: true 
+    example: true
+  contactType:
+    type: string
+    example: work
+  photo:
+    type: string
+    example: 'https://example.com/photo.jpg' 

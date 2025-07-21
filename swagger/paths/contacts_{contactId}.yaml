@@ -38,8 +38,11 @@ get:
                   _id: "60d21b4667d0d8992e610c85"
                   name: "Ivan Petrenko"
                   email: "ivan@example.com"
-                  phone: "+380501234567"
-                  favorite: false
+                  phoneNumber: "+380501234567"
+                  isFavourite: false
+                  contactType: work
+                  photo: "https://example.com/photo.jpg"
+                  userId: "60d21b4667d0d8992e610c99"
     '404':
       description: Контакт не знайдено
       content:
@@ -66,19 +69,7 @@ patch:
     content:
       multipart/form-data:
         schema:
-          type: object
-          properties:
-            name:
-              type: string
-            email:
-              type: string
-            phone:
-              type: string
-            favorite:
-              type: boolean
-            photo:
-              type: string
-              format: binary
+          $ref: '../../components/contactUpdate.yaml'
   responses:
     '200':
       description: Контакт успішно оновлено
@@ -104,8 +95,11 @@ patch:
                   _id: "60d21b4667d0d8992e610c85"
                   name: "Ivan Petrenko"
                   email: "ivan@example.com"
-                  phone: "+380501234567"
-                  favorite: true
+                  phoneNumber: "+380501234567"
+                  isFavourite: true
+                  contactType: work
+                  photo: "https://example.com/photo.jpg"
+                  userId: "60d21b4667d0d8992e610c99"
     '400':
       description: Некоректні дані
       content:
