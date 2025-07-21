@@ -2,32 +2,28 @@ type: object
 properties:
   _id:
     type: string
-    example: 60d21b4667d0d8992e610c85
+    description: Унікальний ідентифікатор контакту
   name:
     type: string
-    example: Ivan Petrenko
-  email:
-    type: string
-    example: ivan@example.com
   phoneNumber:
     type: string
-    example: '+380501234567'
-  isFavourite:
-    type: boolean
-    example: false
   contactType:
     type: string
-    example: work
   photo:
     type: string
-    example: 'https://example.com/photo.jpg'
+    description: URL фото
   userId:
     type: string
-    example: 60d21b4667d0d8992e610c99
+    description: ID користувача
+  createdAt:
+    type: string
+    format: date-time
+  updatedAt:
+    type: string
+    format: date-time
 required:
   - _id
   - name
   - phoneNumber
   - contactType
-  - isFavourite
   - userId 

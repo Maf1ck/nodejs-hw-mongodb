@@ -1,0 +1,28 @@
+tags:
+  - Contacts
+summary: Отримати контакт за ID
+operationId: getContactById
+security:
+  - bearerAuth: []
+description: |
+  Повертає контакт за його унікальним ідентифікатором. Потрібна авторизація через Bearer токен.
+parameters:
+  - name: contactId
+    in: path
+    required: true
+    description: Унікальний ідентифікатор контакту
+    schema:
+      type: string
+responses:
+  '200':
+    description: Успішно знайдено контакт
+    content:
+      application/json:
+        schema:
+          $ref: '../../../components/contact.yaml'
+  '404':
+    description: Контакт не знайдено
+    content:
+      application/json:
+        schema:
+          $ref: '../../../components/error.yaml' 

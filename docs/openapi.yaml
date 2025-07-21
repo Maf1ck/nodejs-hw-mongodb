@@ -15,9 +15,17 @@ tags:
     description: Операції з контактами
 paths:
   /contacts:
-    $ref: '../swagger/paths/contacts.yaml'
+    get:
+      $ref: '../swagger/paths/contacts/get.yaml'
+    post:
+      $ref: '../swagger/paths/contacts/post.yaml'
   /contacts/{contactId}:
-    $ref: '../swagger/paths/contacts_{contactId}.yaml'
+    get:
+      $ref: '../swagger/paths/contacts/{contactId}/get.yaml'
+    patch:
+      $ref: '../swagger/paths/contacts/{contactId}/patch.yaml'
+    delete:
+      $ref: '../swagger/paths/contacts/{contactId}/delete.yaml'
 components:
   securitySchemes:
     bearerAuth:

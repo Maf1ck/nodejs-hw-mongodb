@@ -1,0 +1,21 @@
+type: object
+properties:
+  total:
+    type: integer
+    description: Загальна кількість контактів
+  page:
+    type: integer
+    description: Номер сторінки
+  limit:
+    type: integer
+    description: Кількість елементів на сторінці
+  contacts:
+    type: array
+    items:
+      $ref: './contact.yaml'
+    description: Масив контактів
+required:
+  - total
+  - page
+  - limit
+  - contacts 
